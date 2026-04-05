@@ -2,6 +2,12 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "zeydesign",
   "compatibility_date": "2026-04-05",
+  "routes": [
+    {
+      "pattern": "zeydesign.online",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./out",
     "html_handling": "force-trailing-slash",
