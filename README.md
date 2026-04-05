@@ -1,6 +1,6 @@
-# ZeyDesign Free
+# ZeyDesign
 
-Tam ucretsiz hosting hedefi icin yeniden kurulmus statik ZeyDesign vitrini.
+ZeyDesign icin hazirlanan hafif ve canliya uygun vitrin surumu.
 
 ## Stack
 
