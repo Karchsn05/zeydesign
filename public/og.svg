@@ -1,0 +1,24 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F7F0E6"/>
+  <circle cx="1038" cy="120" r="220" fill="#A95D3C" fill-opacity="0.18"/>
+  <circle cx="170" cy="520" r="210" fill="#31473A" fill-opacity="0.16"/>
+  <rect x="72" y="72" width="1056" height="486" rx="36" fill="#FFFDF9" stroke="#E6D7C6" stroke-width="2"/>
+  <rect x="112" y="118" width="150" height="38" rx="19" fill="#A95D3C"/>
+  <text x="144" y="143" fill="#FFFDF9" font-family="Georgia, serif" font-size="18" font-weight="700" letter-spacing="2">ZEYDESIGN</text>
+  <text x="112" y="250" fill="#1F1713" font-family="Georgia, serif" font-size="64" font-weight="700">
+    Butik nakis ve tekstil
+  </text>
+  <text x="112" y="326" fill="#1F1713" font-family="Georgia, serif" font-size="64" font-weight="700">
+    urunleri icin hafif vitrin
+  </text>
+  <text x="112" y="392" fill="#5E5148" font-family="Arial, sans-serif" font-size="28">
+    Cloudflare Pages + Supabase ile calisan statik katalog,
+  </text>
+  <text x="112" y="432" fill="#5E5148" font-family="Arial, sans-serif" font-size="28">
+    kisellestirme akisi ve WhatsApp destekli siparis deneyimi.
+  </text>
+  <rect x="112" y="472" width="196" height="52" rx="26" fill="#31473A"/>
+  <text x="150" y="505" fill="#FFFDF9" font-family="Arial, sans-serif" font-size="22" font-weight="700">
+    zeydesign.online
+  </text>
+</svg>

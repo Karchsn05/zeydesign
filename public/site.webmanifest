@@ -1,0 +1,17 @@
+{
+  "name": "ZeyDesign Atolye",
+  "short_name": "ZeyDesign",
+  "description": "Statik host uyumlu butik nakis ve tekstil vitrini.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6efe4",
+  "theme_color": "#a95d3c",
+  "lang": "tr-TR",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

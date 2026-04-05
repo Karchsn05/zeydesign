@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none">
+  <rect width="1200" height="900" fill="#F5EEE9"/>
+  <rect x="350" y="110" width="500" height="660" rx="70" fill="#FFF8F3"/>
+  <path d="M420 240C510 210 690 210 780 240" stroke="#B77B5D" stroke-width="22" stroke-linecap="round"/>
+  <rect x="440" y="300" width="320" height="320" rx="48" fill="#F1DDCF"/>
+  <text x="600" y="500" text-anchor="middle" font-size="120" font-family="Arial, sans-serif" fill="#7A513D">ZD</text>
+</svg>

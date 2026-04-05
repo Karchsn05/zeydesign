@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --brand-primary: #a95d3c;
+  --brand-secondary: #31473a;
+  --surface: #f6efe4;
+  --surface-deep: #efe0cd;
+  --ink: #231b17;
+  --muted: #65584f;
+  --card-shadow: 0 30px 70px rgba(56, 35, 20, 0.12);
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(169, 93, 60, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(49, 71, 58, 0.08), transparent 34%),
+    linear-gradient(180deg, #fbf7f1 0%, #f6efe4 100%);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  overflow-x: clip;
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.app-shell {
+  position: relative;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black, transparent 76%);
+  opacity: 0.15;
+}
+
+@media (max-width: 767px) {
+  .app-shell::before {
+    opacity: 0.08;
+  }
+}
+
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+
+.safe-bottom-offset {
+  bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+
+::selection {
+  background: rgba(169, 93, 60, 0.18);
+}
