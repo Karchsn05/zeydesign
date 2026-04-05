@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { DecorativeSprinkles } from "@/components/site/decorative-sprinkles";
 import { getSiteConfig, getSocialLinks } from "@/lib/catalog";
 
 export function SiteFooter() {
@@ -7,8 +8,9 @@ export function SiteFooter() {
   const links = getSocialLinks({ footerOnly: true });
 
   return (
-    <footer className="border-t border-white/20 bg-[radial-gradient(circle_at_top_left,rgba(214,161,77,0.18),transparent_22%),linear-gradient(135deg,#241915_0%,#1a251f_48%,#1f1612_100%)] text-stone-100">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+    <footer className="relative overflow-hidden border-t border-white/20 bg-[radial-gradient(circle_at_top_left,rgba(214,161,77,0.22),transparent_22%),linear-gradient(135deg,#241915_0%,#1a251f_48%,#1f1612_100%)] text-stone-100">
+      <DecorativeSprinkles className="opacity-45" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-4">
           <p className="font-display text-3xl sm:text-4xl">{config.brandName}</p>
           <p className="max-w-md text-sm leading-7 text-stone-300">{config.footerDescription}</p>

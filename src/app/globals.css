@@ -98,3 +98,32 @@ body {
     0 25px 60px rgba(58, 32, 18, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
+
+.paper-card {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 34%),
+    linear-gradient(180deg, rgba(255, 251, 246, 0.94), rgba(248, 235, 220, 0.84));
+}
+
+.petal-dots {
+  background-image:
+    radial-gradient(circle at 12px 12px, rgba(243, 139, 160, 0.14) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 34px 30px, rgba(214, 161, 77, 0.12) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 56px 16px, rgba(125, 177, 122, 0.12) 0 3px, transparent 3.5px);
+  background-size: 72px 48px;
+}
+
+.doodle-sway {
+  animation: doodle-sway 8s ease-in-out infinite;
+}
+
+@keyframes doodle-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(4deg) translateY(4px);
+  }
+}

@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import { DecorativeSprinkles } from "@/components/site/decorative-sprinkles";
 import { ProductCard } from "@/components/site/product-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import type { CategoryRecord, ProductRecord } from "@/lib/catalog";
@@ -30,7 +32,7 @@ function renderHero(section: LandingSectionRecord) {
         ) : null}
         <div className="space-y-4">
           {section.payload.content.title ? <h1 className="max-w-4xl font-display text-4xl leading-[1.04] text-stone-950 sm:text-5xl lg:text-6xl">{section.payload.content.title}</h1> : null}
-          {section.payload.content.body ? <p className="max-w-2xl text-base leading-8 text-stone-600 sm:text-lg">{section.payload.content.body}</p> : null}
+          {section.payload.content.body ? <p className="max-w-2xl text-base leading-8 text-stone-700 sm:text-lg">{section.payload.content.body}</p> : null}
         </div>
         <div className="grid gap-3 sm:flex sm:flex-wrap">
           {section.payload.cta.label && section.payload.cta.href ? (
@@ -39,7 +41,7 @@ function renderHero(section: LandingSectionRecord) {
             </Link>
           ) : null}
           {section.payload.cta.secondaryLabel && section.payload.cta.secondaryHref ? (
-            <Link href={section.payload.cta.secondaryHref} className="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white/80 px-6 text-sm font-semibold text-stone-800 transition hover:-translate-y-0.5">
+            <Link href={section.payload.cta.secondaryHref} className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6b797] bg-[#fff8f3] px-6 text-sm font-semibold text-stone-800 transition hover:-translate-y-0.5">
               {section.payload.cta.secondaryLabel}
             </Link>
           ) : null}
@@ -55,7 +57,8 @@ function renderHero(section: LandingSectionRecord) {
           </div>
         ) : null}
       </div>
-      <div className="relative overflow-hidden rounded-[2.25rem] border border-white/60 bg-[linear-gradient(160deg,#fff6ec_0%,#f3ddc8_36%,#dab07c_72%,#345b4a_125%)] p-6 shadow-[var(--card-shadow)] sm:p-8">
+      <div className="paper-card petal-dots relative overflow-hidden rounded-[2.25rem] border border-white/60 p-6 shadow-[var(--card-shadow)] sm:p-8">
+        <DecorativeSprinkles />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.86),transparent_34%)]" />
         <div className="absolute -right-10 top-10 size-36 rounded-full bg-white/20 blur-2xl" />
         <div className="absolute bottom-4 left-4 size-28 rounded-full bg-[rgba(52,91,74,0.26)] blur-2xl" />
@@ -63,7 +66,7 @@ function renderHero(section: LandingSectionRecord) {
           {section.payload.content.highlight ? <div className="inline-flex rounded-full bg-stone-950 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white">{section.payload.content.highlight}</div> : null}
           <div className="space-y-4">
             {section.payload.content.caption ? <p className="font-display text-3xl text-stone-950 sm:text-4xl">{section.payload.content.caption}</p> : null}
-            <p className="text-sm leading-7 text-stone-800 sm:text-base">Zarif dokular, sıcak renkler ve sade bir akışla karar vermeyi kolaylaştıran butik bir vitrin deneyimi kurgulandı.</p>
+            <p className="text-sm leading-7 text-stone-800 sm:text-base">Çiçekli küçük detaylar, sıcak renkler ve uğraştırmayan bir akışla ev işi samimiyetini taşıyan bir vitrin hazırlandı.</p>
           </div>
         </div>
       </div>
@@ -126,7 +129,7 @@ function renderCards(section: LandingSectionRecord, tone: "plain" | "steps" = "p
 
   return (
     <section key={section.id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="glass-panel section-glow grid gap-8 rounded-[2.25rem] border border-white/60 p-5 sm:p-8 lg:grid-cols-[0.95fr_1.05fr]">
+      <div className="glass-panel section-glow petal-dots grid gap-8 rounded-[2.25rem] border border-white/60 p-5 sm:p-8 lg:grid-cols-[0.95fr_1.05fr]">
         <SectionHeading eyebrow={section.payload.content.eyebrow} title={section.payload.content.title ?? "Bolum"} description={section.payload.content.body} />
         <div className={`grid gap-4 ${section.payload.items.length > 3 ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-3"}`}>
           {section.payload.items.map((item, index) => (
@@ -150,9 +153,10 @@ function renderRichText(section: LandingSectionRecord) {
         <div className="space-y-5">
           <SectionHeading eyebrow={section.payload.content.eyebrow} title={section.payload.content.title ?? "Bolum"} description={section.payload.content.body} />
         </div>
-        <div className="section-glow rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,#fff7ef_0%,#f7e2cf_45%,#d9b480_100%)] p-6">
+        <div className="paper-card section-glow petal-dots relative rounded-[2rem] border border-white/60 p-6">
+          <Image src="/doodles/flower-bloom.svg" alt="" width={80} height={80} unoptimized aria-hidden="true" className="absolute -right-6 -top-6 w-16 opacity-75 sm:w-20" />
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--brand-primary)]">{section.payload.content.caption ?? "Editoryal Alan"}</p>
-          <p className="mt-4 text-base leading-8 text-stone-700">{section.payload.content.highlight ?? "Landing düzeni özenli editoryal bloklarla ilerler."}</p>
+          <p className="mt-4 text-base leading-8 text-stone-700">{section.payload.content.highlight ?? "Landing düzeni küçük sürprizler ve sıcak bir dil ile ilerler."}</p>
         </div>
       </div>
       {section.payload.items.length ? (
@@ -192,9 +196,11 @@ function renderFaq(section: LandingSectionRecord) {
 function renderCtaBand(section: LandingSectionRecord) {
   return (
     <section key={section.id} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="rounded-[2.25rem] bg-[linear-gradient(135deg,#1f1612_0%,#345b4a_52%,#b85b2f_100%)] px-6 py-8 text-white shadow-[var(--card-shadow)] sm:px-8 sm:py-10">
+      <div className="relative overflow-hidden rounded-[2.25rem] bg-[linear-gradient(135deg,#5c3425_0%,#345b4a_48%,#c77249_100%)] px-6 py-8 text-white shadow-[var(--card-shadow)] sm:px-8 sm:py-10">
+        <Image src="/doodles/leaf-squiggle.svg" alt="" width={160} height={87} unoptimized aria-hidden="true" className="absolute -left-4 top-0 w-32 opacity-35 sm:w-40" />
+        <Image src="/doodles/ladybug.svg" alt="" width={40} height={40} unoptimized aria-hidden="true" className="absolute bottom-3 right-4 w-10 opacity-80" />
         {section.payload.content.eyebrow ? <p className="text-xs font-semibold uppercase tracking-[0.32em] text-stone-400">{section.payload.content.eyebrow}</p> : null}
-        <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div className="relative mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             {section.payload.content.title ? <h2 className="font-display text-3xl sm:text-4xl">{section.payload.content.title}</h2> : null}
             {section.payload.content.body ? <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-300 sm:text-base">{section.payload.content.body}</p> : null}

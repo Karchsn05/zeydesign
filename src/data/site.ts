@@ -26,8 +26,8 @@ export type SiteConfig = {
 
 export const siteConfig: SiteConfig = {
   brandName: "ZeyDesign",
-  tagline: "Butik nakış ve tekstil koleksiyonları",
-  announcement: "Kişiye özel siparişlerde termin seçime göre değişebilir.",
+  tagline: "Ev sıcaklığında nakışlı küçük mutluluklar",
+  announcement: "Aklına bir şey takılırsa çekinmeden yaz; siparişi birlikte netleştiriyoruz.",
   phone: "+90 535 575 33 36",
   whatsapp: "+90 535 575 33 36",
   whatsappHref: "https://wa.me/905355753336",
@@ -35,7 +35,7 @@ export const siteConfig: SiteConfig = {
   city: "İstanbul",
   instagramHref: "https://www.instagram.com/_zey_design/",
   shopierHref: "https://www.shopier.com/lifsepeti",
-  footerDescription: "Butik nakış ve özenli dikim ürünlerinde sade, kullanışlı ve samimi bir çizgi kuruyoruz.",
+  footerDescription: "Evde hazırlanmış gibi sıcak, ufak sürprizleri olan, hediye ederken de kullanırken de yüz güldüren parçalar hazırlıyoruz.",
 };
 
 export const socialLinks: SocialLink[] = [

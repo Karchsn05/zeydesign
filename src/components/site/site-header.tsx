@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { CartLink } from "@/components/site/cart-link";
+import { DecorativeSprinkles } from "@/components/site/decorative-sprinkles";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -32,7 +33,8 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
           {announcement}
         </div>
       ) : null}
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <DecorativeSprinkles className="opacity-55" />
         <Link href="/" className="min-w-0 flex-1 pr-3" onClick={() => setIsOpen(false)}>
           <p className="truncate font-display text-2xl text-stone-950 sm:text-3xl">{brandName}</p>
           <p className="mt-1 truncate text-[10px] uppercase tracking-[0.22em] text-stone-500 sm:text-xs">{tagline}</p>
