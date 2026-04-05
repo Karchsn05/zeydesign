@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     default: "ZeyDesign Atolye",
     template: "%s | ZeyDesign Atolye",
   },
-  description: "Statik host uyumlu butik nakis ve tekstil vitrini.",
+  description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
   applicationName: "ZeyDesign",
   manifest: "/site.webmanifest",
   referrer: "strict-origin-when-cross-origin",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     title: "ZeyDesign Atolye",
-    description: "Statik host uyumlu butik nakis ve tekstil vitrini.",
+    description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
     siteName: "ZeyDesign",
     url: "/",
     images: [
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "ZeyDesign Atolye",
-    description: "Statik host uyumlu butik nakis ve tekstil vitrini.",
+    description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
     images: ["/og.svg"],
   },
 };
