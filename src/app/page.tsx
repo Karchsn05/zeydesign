@@ -6,7 +6,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Ana Sayfa",
-  description: "Butik nakis ve tekstil urunlerini, secenek bazli kisellestirme ile incele.",
+  description: "Butik nakış ve tekstil ürünlerini, seçenek bazlı kişiselleştirme ile incele.",
   path: "/",
 });
 

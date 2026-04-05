@@ -5,8 +5,8 @@ import { getSiteConfig } from "@/lib/catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Siparis Birak",
-  description: "Sepetindeki urunler icin iletisim bilgilerini gir ve siparis talebini birak.",
+  title: "Sipariş Bırak",
+  description: "Sepetindeki ürünler için iletişim bilgilerini gir ve sipariş talebini bırak.",
   path: "/odeme",
   indexable: false,
 });

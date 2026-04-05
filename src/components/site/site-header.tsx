@@ -16,9 +16,9 @@ type Props = {
 
 const links = [
   { href: "/", label: "Ana Sayfa" },
-  { href: "/urunler", label: "Urunler" },
-  { href: "/hakkimizda", label: "Hakkimizda" },
-  { href: "/iletisim", label: "Iletisim" },
+  { href: "/urunler", label: "Ürünler" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/iletisim", label: "İletişim" },
 ];
 
 export function SiteHeader({ brandName, tagline, announcement }: Props) {
@@ -26,15 +26,15 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-[rgba(249,245,238,0.92)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/40 bg-[linear-gradient(180deg,rgba(255,248,242,0.94),rgba(249,241,232,0.88))] backdrop-blur-xl">
       {announcement ? (
-        <div className="border-b border-stone-200/70 bg-stone-900 px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-50 sm:text-xs">
+        <div className="border-b border-white/20 bg-[linear-gradient(90deg,var(--brand-secondary),var(--brand-primary))] px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-50 sm:text-xs">
           {announcement}
         </div>
       ) : null}
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="min-w-0 flex-1 pr-3" onClick={() => setIsOpen(false)}>
-          <p className="truncate font-display text-2xl text-stone-900 sm:text-3xl">{brandName}</p>
+          <p className="truncate font-display text-2xl text-stone-950 sm:text-3xl">{brandName}</p>
           <p className="mt-1 truncate text-[10px] uppercase tracking-[0.22em] text-stone-500 sm:text-xs">{tagline}</p>
         </Link>
 
@@ -58,7 +58,7 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
             href="/iletisim"
             className="inline-flex min-h-11 items-center rounded-full border border-stone-300/80 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-stone-400"
           >
-            Mesaj Gonder
+            Mesaj Gönder
           </Link>
           <CartLink />
         </div>
@@ -67,7 +67,7 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
           <Link
             href="/iletisim"
             className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-stone-300/80 bg-white/90 text-stone-700 shadow-sm"
-            aria-label="Iletisim"
+            aria-label="İletişim"
           >
             <MessageCircle className="size-4" />
           </Link>
@@ -76,7 +76,7 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
             onClick={() => setIsOpen((value) => !value)}
             className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-stone-300/80 bg-white/90 text-stone-800 shadow-sm"
             aria-expanded={isOpen}
-            aria-label={isOpen ? "Menuyu kapat" : "Menuyu ac"}
+            aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}
           >
             {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -102,8 +102,8 @@ export function SiteHeader({ brandName, tagline, announcement }: Props) {
             <Link
               href="/sepet"
               onClick={() => setIsOpen(false)}
-              className="flex min-h-11 items-center justify-between rounded-2xl bg-[var(--brand-primary)] px-4 text-sm font-semibold text-white"
-            >
+            className="flex min-h-11 items-center justify-between rounded-2xl bg-[linear-gradient(135deg,var(--brand-primary),var(--brand-primary-deep))] px-4 text-sm font-semibold text-white shadow-lg shadow-[rgba(184,91,47,0.25)]"
+          >
               <span>Sepete Git</span>
               <ShoppingBag className="size-4" />
             </Link>

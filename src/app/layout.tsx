@@ -11,13 +11,13 @@ import "./globals.css";
 
 const display = Cormorant_Garamond({
   variable: "--font-display",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
 });
 
 const body = Manrope({
   variable: "--font-body",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
 });
 
 export const metadata: Metadata = {
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
     }
   })(),
   title: {
-    default: "ZeyDesign Atolye",
-    template: "%s | ZeyDesign Atolye",
+    default: "ZeyDesign Atölye",
+    template: "%s | ZeyDesign Atölye",
   },
-  description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
+  description: "Butik nakış ve tekstil ürünlerini, kişiye özel seçeneklerle sıcak ve özenli bir vitrin deneyiminde keşfet.",
   applicationName: "ZeyDesign",
   manifest: "/site.webmanifest",
   referrer: "strict-origin-when-cross-origin",
-  keywords: ["butik nakis", "tekstil", "kisiye ozel hediye", "ozel siparis", "zeydesign"],
+  keywords: ["butik nakış", "tekstil", "kişiye özel hediye", "özel sipariş", "zeydesign"],
   formatDetection: {
     telephone: false,
     email: false,
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    title: "ZeyDesign Atolye",
-    description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
+    title: "ZeyDesign Atölye",
+    description: "Butik nakış ve tekstil ürünlerini, kişiye özel seçeneklerle sıcak ve özenli bir vitrin deneyiminde keşfet.",
     siteName: "ZeyDesign",
     url: "/",
     images: [
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
         url: "/og.svg",
         width: 1200,
         height: 630,
-        alt: "ZeyDesign vitrin paylasim gorseli",
+        alt: "ZeyDesign vitrin paylaşım görseli",
       },
     ],
   },
   twitter: {
     card: "summary",
-    title: "ZeyDesign Atolye",
-    description: "Butik nakis ve tekstil urunlerini, kisiye ozel seceneklerle sade bir vitrin deneyiminde kesfet.",
+    title: "ZeyDesign Atölye",
+    description: "Butik nakış ve tekstil ürünlerini, kişiye özel seçeneklerle sıcak ve özenli bir vitrin deneyiminde keşfet.",
     images: ["/og.svg"],
   },
 };
@@ -84,9 +84,9 @@ export default function RootLayout({
             className="app-shell min-h-screen"
             style={
               {
-                "--brand-primary": "#a95d3c",
-                "--brand-secondary": "#31473a",
-                "--surface": "#f6efe4",
+                "--brand-primary": "#b85b2f",
+                "--brand-secondary": "#345b4a",
+                "--surface": "#f8efe2",
               } as CSSProperties
             }
           >

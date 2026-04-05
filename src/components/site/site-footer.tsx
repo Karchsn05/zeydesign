@@ -7,22 +7,22 @@ export function SiteFooter() {
   const links = getSocialLinks({ footerOnly: true });
 
   return (
-    <footer className="border-t border-stone-200/80 bg-stone-950 text-stone-100">
+    <footer className="border-t border-white/20 bg-[radial-gradient(circle_at_top_left,rgba(214,161,77,0.18),transparent_22%),linear-gradient(135deg,#241915_0%,#1a251f_48%,#1f1612_100%)] text-stone-100">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-4">
           <p className="font-display text-3xl sm:text-4xl">{config.brandName}</p>
           <p className="max-w-md text-sm leading-7 text-stone-300">{config.footerDescription}</p>
         </div>
         <div className="space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-400">Kesfet</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-400">Keşfet</p>
           <div className="flex flex-col gap-3 text-sm text-stone-200">
-            <Link href="/urunler">Urunler</Link>
-            <Link href="/hakkimizda">Hakkimizda</Link>
-            <Link href="/iletisim">Iletisim</Link>
+            <Link href="/urunler">Ürünler</Link>
+            <Link href="/hakkimizda">Hakkımızda</Link>
+            <Link href="/iletisim">İletişim</Link>
           </div>
         </div>
         <div className="space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-400">Baglantilar</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-400">Bağlantılar</p>
           <div className="flex flex-col gap-3 text-sm text-stone-200">
             {links.map((link) => (
               <a key={link.id} href={link.url} target="_blank" rel="noreferrer">

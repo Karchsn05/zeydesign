@@ -17,10 +17,10 @@ export function formatCurrency(value: number | string) {
 
 export function formatLeadTime(days: number) {
   if (days <= 1) {
-    return "1 is gunu";
+    return "1 iş günü";
   }
 
-  return `${days} is gunu`;
+  return `${days} iş günü`;
 }
 
 export function normalizePhone(value: string) {

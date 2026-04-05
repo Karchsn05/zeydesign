@@ -6,7 +6,7 @@ import { formatCurrency, formatLeadTime } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: ProductRecord }) {
   return (
-    <article className="group overflow-hidden rounded-[2rem] border border-stone-200/70 bg-white shadow-[0_20px_70px_rgba(64,47,36,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(64,47,36,0.14)]">
+    <article className="group overflow-hidden rounded-[2rem] border border-white/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,239,226,0.92))] shadow-[0_20px_70px_rgba(64,47,36,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(64,47,36,0.14)]">
       <Link href={`/urunler/${product.slug}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden">
           {product.coverImage ? (
@@ -50,7 +50,7 @@ export function ProductCard({ product }: { product: ProductRecord }) {
           </div>
           <div className="flex items-center justify-between gap-4 border-t border-dashed border-stone-200 pt-4">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-stone-400">Baslangic</p>
+              <p className="text-[11px] uppercase tracking-[0.24em] text-stone-400">Başlangıç</p>
               <p className="mt-1 text-base font-semibold text-stone-900 sm:text-lg">{formatCurrency(product.price)}</p>
             </div>
             <div className="text-right">

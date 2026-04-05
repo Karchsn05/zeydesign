@@ -22,12 +22,12 @@ export function ProductsCatalogClient({
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-14 sm:px-6 lg:px-8">
       <SectionHeading
         eyebrow="Butik Koleksiyon"
-        title="Siparise donusmeye hazir urunler"
-        description="Standart, kisellestirilebilir ve ozel siparis urunlerini ayni vitrinde topluyoruz."
+        title="Siparişe dönüşmeye hazır ürünler"
+        description="Standart, kişiselleştirilebilir ve özel sipariş ürünlerini aynı vitrinde topluyoruz."
       />
       <div className="flex flex-wrap gap-3">
         <Link href="/urunler" className={`rounded-full px-4 py-2 text-sm font-semibold ${!activeCategory ? "bg-stone-950 text-white" : "border border-stone-300 bg-white text-stone-700"}`}>
-          Tumu
+          Tümü
         </Link>
         {categories.map((category) => (
           <Link

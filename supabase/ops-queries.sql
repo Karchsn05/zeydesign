@@ -42,3 +42,8 @@ select
 from public.order_requests
 group by status
 order by total desc;
+
+-- Heartbeat kayitlarini temizle
+delete from public.customer_messages
+where subject = '__heartbeat__'
+  and created_at < now() - interval '30 days';

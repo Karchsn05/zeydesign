@@ -9,16 +9,16 @@ export function CartPageClient() {
   const { items, subtotal, loading, updateItem, removeItem } = useCart();
 
   if (loading) {
-    return <p className="text-sm text-stone-500">Sepet yukleniyor...</p>;
+    return <p className="text-sm text-stone-500">Sepet yükleniyor...</p>;
   }
 
   if (!items.length) {
     return (
       <div className="rounded-[2rem] border border-dashed border-stone-300 bg-white/70 p-8 text-center sm:p-10">
-        <p className="font-display text-3xl text-stone-900 sm:text-4xl">Sepetin henuz bos.</p>
-        <p className="mt-4 text-sm leading-7 text-stone-600 sm:text-base">Once birkac urune goz at, sonra siparisini birak.</p>
+        <p className="font-display text-3xl text-stone-900 sm:text-4xl">Sepetin henüz boş.</p>
+        <p className="mt-4 text-sm leading-7 text-stone-600 sm:text-base">Önce birkaç ürüne göz at, sonra siparişini bırak.</p>
         <Link href="/urunler" className="mt-6 inline-flex min-h-12 items-center rounded-full bg-stone-950 px-6 text-sm font-semibold text-white">
-          Urunleri Incele
+          Ürünleri İncele
         </Link>
       </div>
     );
@@ -66,16 +66,16 @@ export function CartPageClient() {
       </div>
 
       <aside className="hidden rounded-[2rem] border border-stone-200/80 bg-stone-950 p-6 text-white shadow-[var(--card-shadow)] lg:block">
-        <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Siparis Ozeti</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Sipariş Özeti</p>
         <div className="mt-4 flex items-end justify-between gap-4">
           <div>
             <p className="text-sm text-stone-400">Ara toplam</p>
             <p className="text-3xl font-semibold">{formatCurrency(subtotal)}</p>
           </div>
-          <p className="max-w-[180px] text-right text-sm text-stone-300">Kargo tutari onay sonrasinda netlesir.</p>
+            <p className="max-w-[180px] text-right text-sm text-stone-300">Kargo tutarı onay sonrasında netleşir.</p>
         </div>
         <Link href="/odeme" className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-stone-950">
-          Siparise Devam Et
+          Siparişe Devam Et
         </Link>
       </aside>
 
@@ -86,7 +86,7 @@ export function CartPageClient() {
             <p className="text-sm font-semibold text-stone-900">{formatCurrency(subtotal)}</p>
           </div>
           <Link href="/odeme" className="inline-flex min-h-12 items-center rounded-full bg-stone-950 px-5 text-sm font-semibold text-white">
-            Siparise Devam Et
+            Siparişe Devam Et
           </Link>
         </div>
       </div>

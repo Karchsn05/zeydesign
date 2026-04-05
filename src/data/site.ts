@@ -26,16 +26,16 @@ export type SiteConfig = {
 
 export const siteConfig: SiteConfig = {
   brandName: "ZeyDesign",
-  tagline: "Butik nakis ve tekstil koleksiyonlari",
-  announcement: "Kisiye ozel siparislerde termin secime gore degisebilir.",
+  tagline: "Butik nakış ve tekstil koleksiyonları",
+  announcement: "Kişiye özel siparişlerde termin seçime göre değişebilir.",
   phone: "+90 535 575 33 36",
   whatsapp: "+90 535 575 33 36",
   whatsappHref: "https://wa.me/905355753336",
   email: "info@zeydesign.online",
-  city: "Istanbul",
+  city: "İstanbul",
   instagramHref: "https://www.instagram.com/_zey_design/",
   shopierHref: "https://www.shopier.com/lifsepeti",
-  footerDescription: "Butik nakis ve ozenli dikim urunlerinde sade, kullanisli ve samimi bir cizgi kuruyoruz.",
+  footerDescription: "Butik nakış ve özenli dikim ürünlerinde sade, kullanışlı ve samimi bir çizgi kuruyoruz.",
 };
 
 export const socialLinks: SocialLink[] = [

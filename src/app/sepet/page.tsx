@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Sepet",
-  description: "Sectigin urunleri ve kisellestirme ozetini kontrol et, siparis adimina ilerle.",
+  description: "Seçtiğin ürünleri ve kişiselleştirme özetini kontrol et, sipariş adımına ilerle.",
   path: "/sepet",
   indexable: false,
 });

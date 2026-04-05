@@ -41,7 +41,7 @@ export function buildPageMetadata(input: {
           url: "/og.svg",
           width: 1200,
           height: 630,
-          alt: `${config.brandName} vitrin paylasim gorseli`,
+          alt: `${config.brandName} vitrin paylaşım görseli`,
         },
       ],
     },

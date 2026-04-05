@@ -49,27 +49,27 @@ export const cartItemSchema = z.object({
 export const checkoutSchema = z.object({
   customerName: z.string().min(3, "Ad soyad gerekli."),
   phone: z.string().min(10, "Telefon gerekli."),
-  email: z.string().email("Gecerli e-posta gir.").optional().or(z.literal("")),
-  city: z.string().min(2, "Sehir gerekli."),
-  district: z.string().min(2, "Ilce gerekli."),
+  email: z.string().email("Geçerli e-posta gir.").optional().or(z.literal("")),
+  city: z.string().min(2, "Şehir gerekli."),
+  district: z.string().min(2, "İlçe gerekli."),
   address: z.string().min(10, "Adres gerekli."),
   note: z.string().optional(),
-  items: z.array(cartItemSchema).min(1, "Sepet bos olamaz."),
+  items: z.array(cartItemSchema).min(1, "Sepet boş olamaz."),
 });
 
 export const messageSchema = z
   .object({
     name: z.string().min(2, "Ad soyad gerekli."),
     phone: z.string().min(10, "Telefon gerekli.").optional().or(z.literal("")),
-    email: z.string().email("Gecerli e-posta gir.").optional().or(z.literal("")),
+    email: z.string().email("Geçerli e-posta gir.").optional().or(z.literal("")),
     subject: z.string().optional(),
-    message: z.string().min(10, "Mesaj en az 10 karakter olmali."),
+    message: z.string().min(10, "Mesaj en az 10 karakter olmalı."),
   })
   .superRefine((value, ctx) => {
     if (!value.phone && !value.email) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Telefon ya da e-posta alanlarindan en az biri gerekli.",
+        message: "Telefon ya da e-posta alanlarından en az biri gerekli.",
         path: ["phone"],
       });
     }

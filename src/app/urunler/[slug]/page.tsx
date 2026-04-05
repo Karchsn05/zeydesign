@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   if (!product) {
     return buildPageMetadata({
-      title: "Urun Bulunamadi",
-      description: "Istenen urun bulunamadi.",
+      title: "Ürün Bulunamadı",
+      description: "İstenen ürün bulunamadı.",
       path: `/urunler/${slug}`,
     });
   }

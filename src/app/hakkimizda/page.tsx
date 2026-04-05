@@ -5,8 +5,8 @@ import { getLandingSections, getSocialLinks } from "@/lib/catalog";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Hakkimizda",
-  description: "ZeyDesign'in butik uretim anlayisini, marka tonunu ve calisma bicimini ogren.",
+  title: "Hakkımızda",
+  description: "ZeyDesign'in butik üretim anlayışını, marka tonunu ve çalışma biçimini öğren.",
   path: "/hakkimizda",
 });
 

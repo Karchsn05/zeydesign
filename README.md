@@ -42,4 +42,5 @@ Build ciktisi `out/` altina uretilir.
 - `docs/free-hosting-notlari.md`
 - `docs/free-donusum-ozeti.md`
 - `docs/go-live-checklist.md`
+- `docs/supabase-heartbeat.md`
 - `docs/supabase-ops.md`

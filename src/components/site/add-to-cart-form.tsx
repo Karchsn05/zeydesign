@@ -82,7 +82,7 @@ export function AddToCartForm({
     const nextErrors: FormErrors = {};
 
     if (!Number.isInteger(quantity) || quantity < 1) {
-      nextErrors.quantity = "Adet en az 1 olmali.";
+      nextErrors.quantity = "Adet en az 1 olmalı.";
     }
 
     for (const group of product.configurator.groups) {
@@ -175,7 +175,7 @@ export function AddToCartForm({
       },
     });
 
-    setStatus({ type: "success", message: "Urun sepete eklendi." });
+    setStatus({ type: "success", message: "Ürün sepete eklendi." });
   }
 
   return (
@@ -189,13 +189,13 @@ export function AddToCartForm({
         className="space-y-6 rounded-[2rem] border border-stone-200/80 bg-white/80 p-5 shadow-[var(--card-shadow)] backdrop-blur sm:p-6"
       >
         <div className="space-y-2">
-          <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Baslangic fiyati</p>
+          <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Başlangıç fiyatı</p>
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-2xl font-semibold text-stone-900 sm:text-3xl">{formatCurrency(finalUnitPrice)}</p>
-              {summary.adjustments.length ? <p className="mt-1 text-xs text-stone-500">Temel fiyat {formatCurrency(product.price)} uzerine secim etkileri uygulandi.</p> : null}
+              {summary.adjustments.length ? <p className="mt-1 text-xs text-stone-500">Temel fiyat {formatCurrency(product.price)} üzerine seçim etkileri uygulandı.</p> : null}
             </div>
-            <p className="text-right text-sm text-stone-600">{formatLeadTime(product.leadTimeDays)} icinde hazirlanir</p>
+            <p className="text-right text-sm text-stone-600">{formatLeadTime(product.leadTimeDays)} içinde hazırlanır</p>
           </div>
         </div>
 
@@ -249,7 +249,7 @@ export function AddToCartForm({
                         onChange={(event) => updateValue(field.id, event.target.value)}
                         className="min-h-12 w-full rounded-2xl border border-stone-300 bg-white px-4 text-sm text-stone-800 outline-none transition focus:border-[var(--brand-primary)]"
                       >
-                        <option value="">Secim yap</option>
+                        <option value="">Seçim yap</option>
                         {field.options.map((option) => (
                           <option key={option.id} value={option.value}>
                             {option.label}
@@ -300,7 +300,7 @@ export function AddToCartForm({
 
         {summary.adjustments.length ? (
           <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 px-4 py-4">
-            <p className="text-sm font-semibold text-stone-900">Fiyat kirilimi</p>
+            <p className="text-sm font-semibold text-stone-900">Fiyat kırılımı</p>
             <div className="mt-3 space-y-2 text-sm text-stone-600">
               {summary.adjustments.map((adjustment) => (
                 <div key={adjustment.label} className="flex items-center justify-between gap-4">

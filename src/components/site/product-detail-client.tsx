@@ -20,7 +20,7 @@ export function ProductDetailClient({
   return (
     <div className="mx-auto max-w-7xl space-y-14 px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:space-y-16">
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-6 rounded-[2.25rem] border border-stone-200/80 bg-white/85 p-5 shadow-[var(--card-shadow)] sm:p-8">
+        <div className="glass-panel section-glow space-y-6 rounded-[2.25rem] border border-white/60 p-5 sm:p-8">
           <div
             className="relative flex aspect-[4/3] items-end overflow-hidden rounded-[2rem] p-5 sm:p-8"
             style={{
@@ -52,9 +52,9 @@ export function ProductDetailClient({
 
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-[1.5rem] bg-stone-50 p-4">
-              <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Urun tipi</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Ürün tipi</p>
               <p className="mt-2 text-sm font-semibold text-stone-900">
-                {product.productType === "STANDARD" ? "Standart" : product.productType === "CUSTOMIZABLE" ? "Kisellestirilebilir" : "Ozel Siparis"}
+                {product.productType === "STANDARD" ? "Standart" : product.productType === "CUSTOMIZABLE" ? "Kişiselleştirilebilir" : "Özel Sipariş"}
               </p>
             </div>
             <div className="rounded-[1.5rem] bg-stone-50 p-4">
@@ -62,9 +62,9 @@ export function ProductDetailClient({
               <p className="mt-2 text-sm font-semibold text-stone-900">{formatLeadTime(product.leadTimeDays)}</p>
             </div>
             <div className="rounded-[1.5rem] bg-stone-50 p-4">
-              <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Kisellestirme</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Kişiselleştirme</p>
               <p className="mt-2 text-sm font-semibold text-stone-900">
-                {product.customizationMode === "NONE" ? "Yok" : product.customizationMode === "BASIC" ? "Secenek bazli" : "Serbest detay"}
+                {product.customizationMode === "NONE" ? "Yok" : product.customizationMode === "BASIC" ? "Seçenek bazlı" : "Serbest detay"}
               </p>
             </div>
           </div>
@@ -82,7 +82,7 @@ export function ProductDetailClient({
 
       {related.length ? (
         <section className="space-y-8">
-          <h2 className="font-display text-3xl text-stone-950 sm:text-4xl">Benzer urunler</h2>
+          <h2 className="font-display text-3xl text-stone-950 sm:text-4xl">Benzer ürünler</h2>
           <div className="grid gap-5 md:grid-cols-3">
             {related.map((entry) => <ProductCard key={entry.id} product={entry} />)}
           </div>

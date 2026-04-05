@@ -10,11 +10,11 @@ function toWhatsAppHref(baseHref: string, text: string) {
 export function buildOrderWhatsAppHref(baseHref: string, order: RecentOrderSnapshot) {
   const itemLines = order.items.map((item) => `- ${item.productName} x ${item.quantity}`).join("\n");
   const message = [
-    "Merhaba, siparisimi teyit etmek istiyorum.",
-    `Siparis kodu: ${order.orderCode}`,
-    `Musteri: ${order.customerName}`,
+    "Merhaba, siparişimi teyit etmek istiyorum.",
+    `Sipariş kodu: ${order.orderCode}`,
+    `Müşteri: ${order.customerName}`,
     `Telefon: ${order.phone}`,
-    "Urunler:",
+    "Ürünler:",
     itemLines || "- Bilgi yok",
     `Toplam: ${formatCurrency(order.grandTotal)}`,
   ].join("\n");
@@ -33,7 +33,7 @@ export function buildContactWhatsAppHref(
   },
 ) {
   const message = [
-    "Merhaba, iletisim formu yerine buradan yaziyorum.",
+    "Merhaba, iletişim formu yerine buradan yazıyorum.",
     `Ad: ${input.name}`,
     input.phone ? `Telefon: ${input.phone}` : null,
     input.email ? `E-posta: ${input.email}` : null,
@@ -69,14 +69,14 @@ export function buildCheckoutWhatsAppHref(
     .join("\n");
 
   const message = [
-    "Merhaba, siparis ozetimi WhatsApp uzerinden iletiyorum.",
-    `Musteri: ${input.customerName}`,
+    "Merhaba, sipariş özetimi WhatsApp üzerinden iletiyorum.",
+    `Müşteri: ${input.customerName}`,
     `Telefon: ${input.phone}`,
     input.email ? `E-posta: ${input.email}` : null,
-    `Sehir / Ilce: ${input.city} / ${input.district}`,
+    `Şehir / İlçe: ${input.city} / ${input.district}`,
     `Adres: ${input.address}`,
     input.note ? `Not: ${input.note}` : null,
-    "Urunler:",
+    "Ürünler:",
     itemLines || "- Bilgi yok",
     `Toplam: ${formatCurrency(input.subtotal)}`,
   ]

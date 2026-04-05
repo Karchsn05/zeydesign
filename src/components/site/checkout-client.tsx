@@ -40,12 +40,12 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
     setFallbackHref(null);
 
     if (isHoneypotTriggered(formData)) {
-      setError("Form gonderimi dogrulanamadi.");
+      setError("Form gönderimi doğrulanamadı.");
       return;
     }
 
     if (remainingCooldown > 0) {
-      setError(`Siparisi tekrar gondermeden once ${formatCooldownSeconds(remainingCooldown)} saniye bekle.`);
+      setError(`Siparişi tekrar göndermeden önce ${formatCooldownSeconds(remainingCooldown)} saniye bekle.`);
       return;
     }
 
@@ -69,7 +69,7 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
       : null;
 
     if (!hasSupabaseBrowserEnv()) {
-      setError("Siparis veritabanina yazilamiyor. Istersen ozeti dogrudan WhatsApp ile gonderebilirsin.");
+      setError("Sipariş veritabanına yazılamıyor. İstersen özeti doğrudan WhatsApp ile gönderebilirsin.");
       setFallbackHref(nextFallbackHref);
       return;
     }
@@ -96,7 +96,7 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
       });
 
       if (insertError) {
-        setError(insertError.message || "Siparis olusturulamadi.");
+        setError(insertError.message || "Sipariş oluşturulamadı.");
         setFallbackHref(nextFallbackHref);
         setLoading(false);
         return;
@@ -118,7 +118,7 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
       await clear();
       router.push(`/siparis-basarili?orderCode=${encodeURIComponent(nextOrderCode)}`);
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Siparis olusturulamadi.");
+      setError(submitError instanceof Error ? submitError.message : "Sipariş oluşturulamadı.");
       setFallbackHref(nextFallbackHref);
       setLoading(false);
     }
@@ -127,8 +127,8 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
   if (!items.length) {
     return (
       <div className="rounded-[2rem] border border-dashed border-stone-300 bg-white/70 p-8 text-center sm:p-10">
-        <p className="font-display text-3xl text-stone-900 sm:text-4xl">Sepetin bos oldugu icin siparis olusturulamiyor.</p>
-        <p className="mt-4 text-sm leading-7 text-stone-600 sm:text-base">Once bir urun sec, sonra bu sayfadan talebini birak.</p>
+        <p className="font-display text-3xl text-stone-900 sm:text-4xl">Sepetin boş olduğu için sipariş oluşturulamıyor.</p>
+        <p className="mt-4 text-sm leading-7 text-stone-600 sm:text-base">Önce bir ürün seç, sonra bu sayfadan talebini bırak.</p>
       </div>
     );
   }
@@ -164,12 +164,12 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
             {fieldErrors.email ? <p className="text-xs text-rose-600">{fieldErrors.email}</p> : null}
           </label>
           <label className="space-y-2">
-            <span className="text-sm font-medium text-stone-700">Sehir</span>
+            <span className="text-sm font-medium text-stone-700">Şehir</span>
             <input name="city" autoComplete="address-level2" className="min-h-12 w-full rounded-2xl border border-stone-300 bg-stone-50 px-4" />
             {fieldErrors.city ? <p className="text-xs text-rose-600">{fieldErrors.city}</p> : null}
           </label>
           <label className="space-y-2">
-            <span className="text-sm font-medium text-stone-700">Ilce</span>
+            <span className="text-sm font-medium text-stone-700">İlçe</span>
             <input name="district" autoComplete="address-level1" className="min-h-12 w-full rounded-2xl border border-stone-300 bg-stone-50 px-4" />
             {fieldErrors.district ? <p className="text-xs text-rose-600">{fieldErrors.district}</p> : null}
           </label>
@@ -180,31 +180,31 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
           {fieldErrors.address ? <p className="text-xs text-rose-600">{fieldErrors.address}</p> : null}
         </label>
         <label className="block space-y-2">
-          <span className="text-sm font-medium text-stone-700">Siparis notu</span>
+          <span className="text-sm font-medium text-stone-700">Sipariş notu</span>
           <textarea name="note" rows={4} className="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3" />
           {fieldErrors.note ? <p className="text-xs text-rose-600">{fieldErrors.note}</p> : null}
         </label>
         <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 px-4 py-4 text-sm leading-7 text-stone-700">
-          Bu asamada online odeme alinmaz. Siparisin geldikten sonra detaylari kontrol edip WhatsApp veya telefon uzerinden sana geri donus yapariz.
+          Bu aşamada online ödeme alınmaz. Siparişin geldikten sonra detayları kontrol edip WhatsApp veya telefon üzerinden sana geri dönüş yaparız.
         </div>
 
         {fieldErrors.items ? <p className="text-sm text-rose-600">{fieldErrors.items}</p> : null}
         {error ? <p className="text-sm text-rose-600">{error}</p> : null}
         {fallbackHref ? (
           <Link href={fallbackHref} target="_blank" rel="noreferrer" className="inline-flex min-h-12 rounded-full bg-[var(--brand-primary)] px-6 text-sm font-semibold text-white">
-            Ozeti WhatsApp&apos;ta Ac
+            Özeti WhatsApp&apos;ta Aç
           </Link>
         ) : null}
 
         <div className="hidden lg:block">
           <button type="submit" disabled={loading} className="inline-flex min-h-12 rounded-full bg-stone-950 px-6 text-sm font-semibold text-white disabled:opacity-60">
-            {loading ? "Siparis olusturuluyor..." : "Siparisi Birak"}
+            {loading ? "Sipariş oluşturuluyor..." : "Siparişi Bırak"}
           </button>
         </div>
       </form>
 
       <aside className="hidden rounded-[2rem] border border-stone-200/80 bg-stone-950 p-6 text-white shadow-[var(--card-shadow)] lg:block">
-        <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Ozet</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-stone-400">Özet</p>
         <div className="mt-6 space-y-4">
           {items.map((item) => (
             <div key={item.id} className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
@@ -223,7 +223,7 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
           </div>
           <div className="flex items-center justify-between">
             <span>Kargo</span>
-            <span>Onay sonrasi</span>
+            <span>Onay sonrası</span>
           </div>
         </div>
       </aside>
@@ -231,18 +231,18 @@ export function CheckoutClient({ whatsappHref }: { whatsappHref?: string | null 
       <div className="safe-bottom-offset fixed inset-x-4 z-30 rounded-[1.6rem] border border-stone-200 bg-white/96 p-3 shadow-[0_18px_50px_rgba(36,24,18,0.18)] backdrop-blur lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-400">Siparis toplami</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-400">Sipariş toplamı</p>
             <p className="text-sm font-semibold text-stone-900">{formatCurrency(subtotal)}</p>
           </div>
           <button type="submit" form="checkout-form" disabled={loading} className="inline-flex min-h-12 items-center rounded-full bg-stone-950 px-5 text-sm font-semibold text-white disabled:opacity-60">
-            {loading ? "Gonderiliyor..." : "Siparisi Birak"}
+            {loading ? "Gönderiliyor..." : "Siparişi Bırak"}
           </button>
         </div>
         {fieldErrors.items ? <p className="mt-2 text-sm text-rose-600">{fieldErrors.items}</p> : null}
         {error ? <p className="mt-2 text-sm text-rose-600">{error}</p> : null}
         {fallbackHref ? (
           <Link href={fallbackHref} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center rounded-full bg-[var(--brand-primary)] px-4 text-sm font-semibold text-white">
-            Ozeti WhatsApp&apos;ta Ac
+            Özeti WhatsApp&apos;ta Aç
           </Link>
         ) : null}
       </div>

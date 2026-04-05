@@ -37,14 +37,14 @@ export function ContactForm({ whatsappHref, instagramHref }: Props) {
     setFallbackHref(null);
 
     if (isHoneypotTriggered(formData)) {
-      setStatus({ type: "success", message: "Mesajin alindi. Sana en kisa surede donus yapacagiz." });
+      setStatus({ type: "success", message: "Mesajın alındı. Sana en kısa sürede dönüş yapacağız." });
       return;
     }
 
     if (remainingCooldown > 0) {
       setStatus({
         type: "error",
-        message: `Formu tekrar gondermeden once ${formatCooldownSeconds(remainingCooldown)} saniye bekle.`,
+        message: `Formu tekrar göndermeden önce ${formatCooldownSeconds(remainingCooldown)} saniye bekle.`,
       });
       return;
     }
@@ -67,7 +67,7 @@ export function ContactForm({ whatsappHref, instagramHref }: Props) {
     if (!hasSupabaseBrowserEnv()) {
       setStatus({
         type: "error",
-        message: "Mesaj veritabanina yazilamiyor. Istersen ozeti dogrudan WhatsApp ile gonderebilirsin.",
+        message: "Mesaj veritabanına yazılamıyor. İstersen özeti doğrudan WhatsApp ile gönderebilirsin.",
       });
       setFallbackHref(nextFallbackHref);
       return;
@@ -86,17 +86,17 @@ export function ContactForm({ whatsappHref, instagramHref }: Props) {
       });
 
       if (error) {
-        setStatus({ type: "error", message: error.message || "Mesaj gonderilemedi." });
+        setStatus({ type: "error", message: error.message || "Mesaj gönderilemedi." });
         setFallbackHref(nextFallbackHref);
         setLoading(false);
         return;
       }
 
       markSubmitted("contact-form");
-      setStatus({ type: "success", message: "Mesajin alindi. Sana en kisa surede donus yapacagiz." });
+      setStatus({ type: "success", message: "Mesajın alındı. Sana en kısa sürede dönüş yapacağız." });
       setLoading(false);
     } catch (error) {
-      setStatus({ type: "error", message: error instanceof Error ? error.message : "Mesaj gonderilemedi." });
+      setStatus({ type: "error", message: error instanceof Error ? error.message : "Mesaj gönderilemedi." });
       setFallbackHref(nextFallbackHref);
       setLoading(false);
     }
@@ -146,7 +146,7 @@ export function ContactForm({ whatsappHref, instagramHref }: Props) {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button type="submit" disabled={loading} className="inline-flex min-h-12 items-center justify-center rounded-full bg-stone-950 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
-          {loading ? "Gonderiliyor..." : "Mesaj Gonder"}
+          {loading ? "Gönderiliyor..." : "Mesaj Gönder"}
         </button>
         {whatsappHref ? (
           <Link href={whatsappHref} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-800">
@@ -155,7 +155,7 @@ export function ContactForm({ whatsappHref, instagramHref }: Props) {
         ) : null}
         {fallbackHref ? (
           <Link href={fallbackHref} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--brand-primary)] px-5 text-sm font-semibold text-white">
-            Ozeti WhatsApp&apos;ta Ac
+            Özeti WhatsApp&apos;ta Aç
           </Link>
         ) : null}
         {!whatsappHref && instagramHref ? (
