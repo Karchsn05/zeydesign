@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-import { DEFAULT_SITE_URL } from "@/lib/constants";
+import { DEFAULT_SITE_URL, DEFAULT_SUPABASE_PUBLISHABLE_KEY, DEFAULT_SUPABASE_URL } from "@/lib/constants";
 
 type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
@@ -110,11 +110,11 @@ function requiredValue(name: string, value: string | undefined) {
 }
 
 export function hasSupabaseBrowserEnv() {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && getSupabaseBrowserKey());
+  return Boolean((process.env.NEXT_PUBLIC_SUPABASE_URL ?? DEFAULT_SUPABASE_URL) && getSupabaseBrowserKey());
 }
 
 function getSupabaseBrowserKey() {
-  return process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 }
 
 export function createSupabaseBrowserClient() {
@@ -122,7 +122,7 @@ export function createSupabaseBrowserClient() {
     return browserClient;
   }
 
-  const url = requiredValue("NEXT_PUBLIC_SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const url = requiredValue("NEXT_PUBLIC_SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL ?? DEFAULT_SUPABASE_URL);
   const publishableKey = requiredValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", getSupabaseBrowserKey());
 
   browserClient = createClient<Database>(url, publishableKey, {
