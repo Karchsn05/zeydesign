@@ -3,7 +3,7 @@
 import { createContext, useContext, useSyncExternalStore } from "react";
 
 import { LOCAL_STORAGE_CART_KEY } from "@/lib/constants";
-import type { CartItemInput } from "@/lib/validations";
+import { cartItemSchema, type CartItemInput } from "@/lib/validations";
 
 type CartContextValue = {
   items: CartItemInput[];
@@ -25,15 +25,42 @@ function readCartFromStorage() {
     return EMPTY_CART;
   }
 
-  const raw = window.localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+  let raw: string | null = null;
+
+  try {
+    raw = window.localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+  } catch {
+    return EMPTY_CART;
+  }
 
   if (!raw) {
     return EMPTY_CART;
   }
 
   try {
-    return JSON.parse(raw) as CartItemInput[];
+    const parsed = JSON.parse(raw);
+
+    if (!Array.isArray(parsed)) {
+      window.localStorage.removeItem(LOCAL_STORAGE_CART_KEY);
+      return EMPTY_CART;
+    }
+
+    const safeItems = parsed.flatMap((entry) => {
+      const result = cartItemSchema.safeParse(entry);
+      return result.success ? [result.data] : [];
+    });
+
+    if (safeItems.length !== parsed.length) {
+      window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(safeItems));
+    }
+
+    return safeItems;
   } catch {
+    try {
+      window.localStorage.removeItem(LOCAL_STORAGE_CART_KEY);
+    } catch {
+      return EMPTY_CART;
+    }
     return EMPTY_CART;
   }
 }
@@ -43,8 +70,17 @@ function writeCartToStorage(items: CartItemInput[]) {
     return;
   }
 
-  window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(items));
-  window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+  try {
+    const safeItems = items.flatMap((item) => {
+      const result = cartItemSchema.safeParse(item);
+      return result.success ? [result.data] : [];
+    });
+
+    window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(safeItems));
+    window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+  } catch {
+    window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+  }
 }
 
 function subscribe(onStoreChange: () => void) {
