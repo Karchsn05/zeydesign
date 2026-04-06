@@ -54,7 +54,7 @@ export function AddToCartForm({
   onPreviewChange?: (nextImageUrl: string | null) => void;
 }) {
   const formId = `add-to-cart-${product.id}`;
-  const { addItem } = useCart();
+  const { addItem, notice, dismissNotice } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [values, setValues] = useState<ConfiguratorValueMap>(() => buildInitialValues(product));
   const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
@@ -149,31 +149,39 @@ export function AddToCartForm({
 
     const nextSummary = buildConfiguratorSummary(product.configurator, values);
 
-    await addItem({
-      id: crypto.randomUUID(),
-      productId: product.id,
-      productSlug: product.slug,
-      productName: product.name,
-      quantity,
-      unitPrice: product.price + nextSummary.totalDelta,
-      leadTimeDays: product.leadTimeDays,
-      categoryName: product.category.name,
-      coverImage: findPreviewImage(product, nextSummary.activePreviewMediaId),
-      customizationMode: product.customizationMode,
-      customizationPayload: {
-        fieldValues: Object.fromEntries(
-          Object.entries(values).filter((entry): entry is [string, string | boolean] => typeof entry[1] !== "undefined"),
-        ),
-        selections: nextSummary.selections,
-        summaryLines: nextSummary.summaryLines,
-        pricing: {
-          basePrice: product.price,
-          totalDelta: nextSummary.totalDelta,
-          finalUnitPrice: product.price + nextSummary.totalDelta,
-          adjustments: nextSummary.adjustments,
+    try {
+      await addItem({
+        id: crypto.randomUUID(),
+        productId: product.id,
+        productSlug: product.slug,
+        productName: product.name,
+        quantity,
+        unitPrice: product.price + nextSummary.totalDelta,
+        leadTimeDays: product.leadTimeDays,
+        categoryName: product.category.name,
+        coverImage: findPreviewImage(product, nextSummary.activePreviewMediaId),
+        customizationMode: product.customizationMode,
+        customizationPayload: {
+          fieldValues: Object.fromEntries(
+            Object.entries(values).filter((entry): entry is [string, string | boolean] => typeof entry[1] !== "undefined"),
+          ),
+          selections: nextSummary.selections,
+          summaryLines: nextSummary.summaryLines,
+          pricing: {
+            basePrice: product.price,
+            totalDelta: nextSummary.totalDelta,
+            finalUnitPrice: product.price + nextSummary.totalDelta,
+            adjustments: nextSummary.adjustments,
+          },
         },
-      },
-    });
+      });
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message: error instanceof Error && error.message === "CART_TOO_LARGE" ? "Sepet çok büyüdü. Bazı ürünleri çıkarıp tekrar dene." : "Ürün sepete eklenemedi.",
+      });
+      return;
+    }
 
     setStatus({ type: "success", message: "Ürün sepete eklendi." });
   }
@@ -324,6 +332,16 @@ export function AddToCartForm({
           {fieldErrors.quantity ? <p className="text-xs text-rose-600">{fieldErrors.quantity}</p> : null}
         </label>
 
+        {notice ? (
+          <div className="rounded-[1.25rem] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <div className="flex items-start justify-between gap-3">
+              <p>{notice}</p>
+              <button type="button" onClick={dismissNotice} className="shrink-0 text-xs font-semibold uppercase tracking-[0.16em] text-amber-700">
+                Kapat
+              </button>
+            </div>
+          </div>
+        ) : null}
         {status ? <p className={status.type === "success" ? "text-sm text-emerald-700" : "text-sm text-rose-600"}>{status.message}</p> : null}
 
         <div className="hidden lg:block">
@@ -346,6 +364,16 @@ export function AddToCartForm({
           </button>
         </div>
         {fieldErrors.quantity ? <p className="mt-2 text-sm text-rose-600">{fieldErrors.quantity}</p> : null}
+        {notice ? (
+          <div className="mt-2 rounded-[1.1rem] border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+            <div className="flex items-start justify-between gap-3">
+              <p>{notice}</p>
+              <button type="button" onClick={dismissNotice} className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
+                Kapat
+              </button>
+            </div>
+          </div>
+        ) : null}
         {status ? <p className={status.type === "success" ? "mt-2 text-sm text-emerald-700" : "mt-2 text-sm text-rose-600"}>{status.message}</p> : null}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import type { CSSProperties } from "react";
 
@@ -6,7 +7,7 @@ import { CartProvider } from "@/components/cart/cart-provider";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getSiteConfig } from "@/lib/catalog";
-import { LEGACY_LOCAL_STORAGE_CART_KEYS, LOCAL_STORAGE_CART_KEY } from "@/lib/constants";
+import { LEGACY_LOCAL_STORAGE_CART_KEYS, LOCAL_STORAGE_CART_KEY, MAX_CART_ITEM_COUNT, MAX_CART_STORAGE_BYTES, SESSION_CART_NOTICE_KEY } from "@/lib/constants";
 import { getSiteUrl } from "@/lib/supabase";
 import "./globals.css";
 
@@ -26,6 +27,24 @@ const cartRecoveryScript = `
     try {
       const activeKey = ${JSON.stringify(LOCAL_STORAGE_CART_KEY)};
       const legacyKeys = ${JSON.stringify([...LEGACY_LOCAL_STORAGE_CART_KEYS])};
+      const noticeKey = ${JSON.stringify(SESSION_CART_NOTICE_KEY)};
+      const maxBytes = ${JSON.stringify(MAX_CART_STORAGE_BYTES)};
+      const maxItems = ${JSON.stringify(MAX_CART_ITEM_COUNT)};
+
+      const getByteSize = (value) => {
+        try {
+          if (typeof TextEncoder !== "undefined") {
+            return new TextEncoder().encode(value).length;
+          }
+        } catch {}
+        return new Blob([value]).size;
+      };
+
+      const writeNotice = (value) => {
+        try {
+          window.sessionStorage.setItem(noticeKey, value);
+        } catch {}
+      };
 
       for (const key of legacyKeys) {
         try {
@@ -41,14 +60,16 @@ const cartRecoveryScript = `
       const raw = window.localStorage.getItem(activeKey);
       if (!raw) return;
 
-      if (raw.length > 16000) {
+      if (getByteSize(raw) > maxBytes) {
         window.localStorage.removeItem(activeKey);
+        writeNotice("recovered");
         return;
       }
 
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || parsed.length > 30) {
+      if (!Array.isArray(parsed) || parsed.length > maxItems) {
         window.localStorage.removeItem(activeKey);
+        writeNotice("recovered");
         return;
       }
 
@@ -75,10 +96,12 @@ const cartRecoveryScript = `
 
       if (safe.length !== parsed.length) {
         window.localStorage.setItem(activeKey, JSON.stringify(safe));
+        writeNotice("recovered");
       }
     } catch {
       try {
         window.localStorage.removeItem(${JSON.stringify(LOCAL_STORAGE_CART_KEY)});
+        window.sessionStorage.setItem(${JSON.stringify(SESSION_CART_NOTICE_KEY)}, "recovered");
       } catch {}
     }
   })();
@@ -143,7 +166,7 @@ export default function RootLayout({
   return (
     <html lang="tr" className={`${display.variable} ${body.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <script dangerouslySetInnerHTML={{ __html: cartRecoveryScript }} />
+        <Script id="cart-recovery" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: cartRecoveryScript }} />
         <CartProvider>
           <div
             className="app-shell min-h-screen"

@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, useContext, useSyncExternalStore } from "react";
+import { createContext, useContext, useMemo, useState, useSyncExternalStore } from "react";
 
-import { LOCAL_STORAGE_CART_KEY } from "@/lib/constants";
+import { LOCAL_STORAGE_CART_KEY, MAX_CART_ITEM_COUNT, MAX_CART_STORAGE_BYTES, SESSION_CART_NOTICE_KEY } from "@/lib/constants";
 import { cartItemSchema, type CartItemInput } from "@/lib/validations";
 
 type CartContextValue = {
@@ -10,15 +10,66 @@ type CartContextValue = {
   loading: boolean;
   itemCount: number;
   subtotal: number;
+  notice: string | null;
   addItem: (item: CartItemInput) => Promise<void>;
   updateItem: (item: CartItemInput) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
   clear: () => Promise<void>;
+  dismissNotice: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 const EMPTY_CART: CartItemInput[] = [];
 const CART_CHANGE_EVENT = "zeydesign-cart-change";
+const CART_TOO_LARGE_ERROR = "CART_TOO_LARGE";
+const CART_INVALID_ERROR = "CART_INVALID";
+
+function measureStorageBytes(value: string) {
+  try {
+    return new TextEncoder().encode(value).length;
+  } catch {
+    return new Blob([value]).size;
+  }
+}
+
+function setCartNotice(nextValue: "recovered" | "too-large" | null) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    if (!nextValue) {
+      window.sessionStorage.removeItem(SESSION_CART_NOTICE_KEY);
+      return;
+    }
+
+    window.sessionStorage.setItem(SESSION_CART_NOTICE_KEY, nextValue);
+  } catch {}
+}
+
+function readCartNotice() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    return window.sessionStorage.getItem(SESSION_CART_NOTICE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function toNoticeMessage(value: string | null) {
+  if (value === "recovered") {
+    return "Sepet verisi toparlandı. Bozuk görünen bazı kayıtlar temizlendi.";
+  }
+
+  if (value === "too-large") {
+    return "Sepet çok büyüdüğü için son işlem tamamlanamadı. Daha az ürünle tekrar dene.";
+  }
+
+  return null;
+}
 
 function readCartFromStorage() {
   if (typeof window === "undefined") {
@@ -70,16 +121,33 @@ function writeCartToStorage(items: CartItemInput[]) {
     return;
   }
 
-  try {
-    const safeItems = items.flatMap((item) => {
-      const result = cartItemSchema.safeParse(item);
-      return result.success ? [result.data] : [];
-    });
+  const safeItems = items.flatMap((item) => {
+    const result = cartItemSchema.safeParse(item);
+    return result.success ? [result.data] : [];
+  });
 
-    window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(safeItems));
+  if (safeItems.length !== items.length) {
+    throw new Error(CART_INVALID_ERROR);
+  }
+
+  if (safeItems.length > MAX_CART_ITEM_COUNT) {
+    setCartNotice("too-large");
+    throw new Error(CART_TOO_LARGE_ERROR);
+  }
+
+  const serialized = JSON.stringify(safeItems);
+
+  if (measureStorageBytes(serialized) > MAX_CART_STORAGE_BYTES) {
+    setCartNotice("too-large");
+    throw new Error(CART_TOO_LARGE_ERROR);
+  }
+
+  try {
+    window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, serialized);
     window.dispatchEvent(new Event(CART_CHANGE_EVENT));
   } catch {
-    window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+    setCartNotice("too-large");
+    throw new Error(CART_TOO_LARGE_ERROR);
   }
 }
 
@@ -102,6 +170,7 @@ function subscribe(onStoreChange: () => void) {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const items = useSyncExternalStore(subscribe, readCartFromStorage, () => EMPTY_CART);
   const hydrated = useSyncExternalStore(subscribe, () => true, () => false);
+  const [noticeKey, setNoticeKey] = useState<string | null>(() => readCartNotice());
 
   async function addItem(item: CartItemInput) {
     writeCartToStorage([...items, item]);
@@ -119,16 +188,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     writeCartToStorage([]);
   }
 
+  function dismissNotice() {
+    setCartNotice(null);
+    setNoticeKey(null);
+  }
+
   const subtotal = items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
+  const notice = useMemo(() => toNoticeMessage(noticeKey), [noticeKey]);
   const value: CartContextValue = {
     items,
     loading: !hydrated,
     itemCount: items.reduce((acc, item) => acc + item.quantity, 0),
     subtotal,
+    notice,
     addItem,
     updateItem,
     removeItem,
     clear,
+    dismissNotice,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
