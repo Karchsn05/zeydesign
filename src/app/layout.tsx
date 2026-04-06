@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/cart/cart-provider";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getSiteConfig } from "@/lib/catalog";
+import { LEGACY_LOCAL_STORAGE_CART_KEYS, LOCAL_STORAGE_CART_KEY } from "@/lib/constants";
 import { getSiteUrl } from "@/lib/supabase";
 import "./globals.css";
 
@@ -19,6 +20,69 @@ const body = Manrope({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
 });
+
+const cartRecoveryScript = `
+  (() => {
+    try {
+      const activeKey = ${JSON.stringify(LOCAL_STORAGE_CART_KEY)};
+      const legacyKeys = ${JSON.stringify([...LEGACY_LOCAL_STORAGE_CART_KEYS])};
+
+      for (const key of legacyKeys) {
+        try {
+          window.localStorage.removeItem(key);
+        } catch {}
+      }
+
+      if (window.location.search.includes("reset-cart=1")) {
+        window.localStorage.removeItem(activeKey);
+        return;
+      }
+
+      const raw = window.localStorage.getItem(activeKey);
+      if (!raw) return;
+
+      if (raw.length > 16000) {
+        window.localStorage.removeItem(activeKey);
+        return;
+      }
+
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed) || parsed.length > 30) {
+        window.localStorage.removeItem(activeKey);
+        return;
+      }
+
+      const safe = parsed.filter((item) => {
+        return (
+          item &&
+          typeof item === "object" &&
+          typeof item.id === "string" &&
+          typeof item.productId === "string" &&
+          typeof item.productSlug === "string" &&
+          typeof item.productName === "string" &&
+          Number.isFinite(item.quantity) &&
+          item.quantity > 0 &&
+          Number.isFinite(item.unitPrice) &&
+          item.unitPrice >= 0 &&
+          Number.isFinite(item.leadTimeDays) &&
+          item.leadTimeDays > 0 &&
+          typeof item.categoryName === "string" &&
+          (item.customizationMode === "NONE" || item.customizationMode === "BASIC" || item.customizationMode === "FLEX") &&
+          item.customizationPayload &&
+          typeof item.customizationPayload === "object"
+        );
+      });
+
+      if (safe.length !== parsed.length) {
+        window.localStorage.setItem(activeKey, JSON.stringify(safe));
+      }
+    } catch {
+      try {
+        window.localStorage.removeItem(${JSON.stringify(LOCAL_STORAGE_CART_KEY)});
+      } catch {}
+    }
+  })();
+`;
 
 export const metadata: Metadata = {
   metadataBase: (() => {
@@ -79,6 +143,7 @@ export default function RootLayout({
   return (
     <html lang="tr" className={`${display.variable} ${body.variable} h-full antialiased`}>
       <body className="min-h-full">
+        <script dangerouslySetInnerHTML={{ __html: cartRecoveryScript }} />
         <CartProvider>
           <div
             className="app-shell min-h-screen"

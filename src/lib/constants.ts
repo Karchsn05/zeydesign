@@ -1,4 +1,5 @@
 export const LOCAL_STORAGE_CART_KEY = "zd_free_cart_v2";
+export const LEGACY_LOCAL_STORAGE_CART_KEYS = ["zd_free_cart_v1"] as const;
 export const SESSION_ORDER_KEY = "zd_free_last_order_v1";
 export const DEFAULT_SITE_URL = "https://zeydesign.online";
 export const DEFAULT_SUPABASE_URL = "https://koxfmngebugdkfzvnphp.supabase.co";
