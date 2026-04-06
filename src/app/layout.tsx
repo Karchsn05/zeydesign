@@ -78,19 +78,12 @@ const cartRecoveryScript = `
           item &&
           typeof item === "object" &&
           typeof item.id === "string" &&
-          typeof item.productId === "string" &&
           typeof item.productSlug === "string" &&
-          typeof item.productName === "string" &&
           Number.isFinite(item.quantity) &&
           item.quantity > 0 &&
-          Number.isFinite(item.unitPrice) &&
-          item.unitPrice >= 0 &&
-          Number.isFinite(item.leadTimeDays) &&
-          item.leadTimeDays > 0 &&
-          typeof item.categoryName === "string" &&
-          (item.customizationMode === "NONE" || item.customizationMode === "BASIC" || item.customizationMode === "FLEX") &&
-          item.customizationPayload &&
-          typeof item.customizationPayload === "object"
+          item.fieldValues &&
+          typeof item.fieldValues === "object" &&
+          !Array.isArray(item.fieldValues)
         );
       });
 

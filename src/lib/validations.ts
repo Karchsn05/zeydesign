@@ -32,6 +32,13 @@ export const customizationPayloadSchema = z.object({
   }),
 });
 
+export const storedCartItemSchema = z.object({
+  id: z.string().min(1),
+  productSlug: z.string().min(1),
+  quantity: z.number().int().positive(),
+  fieldValues: z.record(z.string(), z.union([z.string(), z.boolean()])).default({}),
+});
+
 export const cartItemSchema = z.object({
   id: z.string().min(1),
   productId: z.string().min(1),
@@ -105,3 +112,4 @@ export const staticProductSchema = z.object({
 });
 
 export type CartItemInput = z.infer<typeof cartItemSchema>;
+export type StoredCartItemInput = z.infer<typeof storedCartItemSchema>;

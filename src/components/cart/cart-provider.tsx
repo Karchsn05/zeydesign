@@ -2,8 +2,10 @@
 
 import { createContext, useContext, useMemo, useState, useSyncExternalStore } from "react";
 
+import { getProductBySlug, type ProductRecord } from "@/lib/catalog";
 import { LOCAL_STORAGE_CART_KEY, MAX_CART_ITEM_COUNT, MAX_CART_STORAGE_BYTES, SESSION_CART_NOTICE_KEY } from "@/lib/constants";
-import { cartItemSchema, type CartItemInput } from "@/lib/validations";
+import { buildConfiguratorSummary } from "@/lib/product-configurator";
+import { cartItemSchema, storedCartItemSchema, type CartItemInput, type StoredCartItemInput } from "@/lib/validations";
 
 type CartContextValue = {
   items: CartItemInput[];
@@ -71,6 +73,73 @@ function toNoticeMessage(value: string | null) {
   return null;
 }
 
+function pickStoredFieldValues(fieldValues: CartItemInput["customizationPayload"]["fieldValues"]) {
+  return Object.fromEntries(
+    Object.entries(fieldValues).filter(([, value]) => {
+      if (typeof value === "boolean") {
+        return value;
+      }
+
+      return value.trim().length > 0;
+    }),
+  );
+}
+
+function findPreviewImage(product: ProductRecord, mediaId: string | null) {
+  if (!mediaId) {
+    return product.coverImage;
+  }
+
+  return product.images.find((image) => image.mediaId === mediaId)?.url ?? product.coverImage;
+}
+
+function hydrateStoredItem(stored: StoredCartItemInput): CartItemInput | null {
+  const product = getProductBySlug(stored.productSlug);
+
+  if (!product) {
+    return null;
+  }
+
+  const fieldValues = Object.fromEntries(
+    Object.entries(stored.fieldValues).filter(([, value]) => typeof value === "string" || typeof value === "boolean"),
+  ) as Record<string, string | boolean>;
+  const summary = buildConfiguratorSummary(product.configurator, fieldValues);
+  const unitPrice = product.price + summary.totalDelta;
+
+  return {
+    id: stored.id,
+    productId: product.id,
+    productSlug: product.slug,
+    productName: product.name,
+    quantity: stored.quantity,
+    unitPrice,
+    leadTimeDays: product.leadTimeDays,
+    categoryName: product.category.name,
+    coverImage: findPreviewImage(product, summary.activePreviewMediaId),
+    customizationMode: product.customizationMode,
+    customizationPayload: {
+      fieldValues,
+      selections: summary.selections,
+      summaryLines: summary.summaryLines,
+      pricing: {
+        basePrice: product.price,
+        totalDelta: summary.totalDelta,
+        finalUnitPrice: unitPrice,
+        adjustments: summary.adjustments,
+      },
+    },
+  };
+}
+
+function toStoredCartItem(item: CartItemInput): StoredCartItemInput {
+  return {
+    id: item.id,
+    productSlug: item.productSlug,
+    quantity: item.quantity,
+    fieldValues: pickStoredFieldValues(item.customizationPayload.fieldValues),
+  };
+}
+
 function readCartFromStorage() {
   if (typeof window === "undefined") {
     return EMPTY_CART;
@@ -96,16 +165,23 @@ function readCartFromStorage() {
       return EMPTY_CART;
     }
 
-    const safeItems = parsed.flatMap((entry) => {
-      const result = cartItemSchema.safeParse(entry);
+    const safeStoredItems = parsed.flatMap((entry) => {
+      const result = storedCartItemSchema.safeParse(entry);
       return result.success ? [result.data] : [];
     });
+    const hydratedEntries = safeStoredItems.flatMap((entry) => {
+      const hydrated = hydrateStoredItem(entry);
+      return hydrated ? [{ stored: entry, item: hydrated }] : [];
+    });
+    const hydratedItems = hydratedEntries.map((entry) => entry.item);
 
-    if (safeItems.length !== parsed.length) {
-      window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(safeItems));
+    if (safeStoredItems.length !== parsed.length || hydratedEntries.length !== safeStoredItems.length) {
+      const normalizedStoredItems = hydratedEntries.map((entry) => entry.stored);
+      window.localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(normalizedStoredItems));
+      setCartNotice("recovered");
     }
 
-    return safeItems;
+    return hydratedItems;
   } catch {
     try {
       window.localStorage.removeItem(LOCAL_STORAGE_CART_KEY);
@@ -135,7 +211,8 @@ function writeCartToStorage(items: CartItemInput[]) {
     throw new Error(CART_TOO_LARGE_ERROR);
   }
 
-  const serialized = JSON.stringify(safeItems);
+  const storedItems = safeItems.map(toStoredCartItem);
+  const serialized = JSON.stringify(storedItems);
 
   if (measureStorageBytes(serialized) > MAX_CART_STORAGE_BYTES) {
     setCartNotice("too-large");
